@@ -1,0 +1,33 @@
+.stopwatch {
+    /*display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;*/
+    display: grid;
+    align-items: center;
+    border: 2px black solid;
+    border-radius: 100%;
+    width: 350px;
+    height: 350px;
+    font-family: 'Bebas Neue', cursive;
+    
+}
+
+#time {
+    
+    font-weight: bold;
+    font-size: xx-large;
+    width: 350px;
+    text-align: center;
+}
+.buttons{
+    text-align: center;
+    padding-top: 10px;
+    
+}
+.bttn{
+    border: 3px black solid;
+    border-radius: 10%;
+    font-size: large;
+    
+}
