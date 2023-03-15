@@ -1,33 +1,68 @@
-.stopwatch {
-    /*display: flex;
-    flex-direction: column;
+.body {
+    background-color: #1b1b1b;
     justify-content: center;
-    flex-wrap: wrap;*/
+}
+.stopwatch {
+    position: relative;
+    margin-top: 10%;
     display: grid;
     align-items: center;
-    border: 2px black solid;
-    border-radius: 100%;
+    border-radius: 50%;
     width: 350px;
     height: 350px;
     font-family: 'Bebas Neue', cursive;
+    justify-content: center;
     
 }
+.stopwatch::before{
+    content: "";
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background: linear-gradient(45deg,#FFFF00,#FF10F0);
+    opacity: 0.7;
+    animation: animate 0s linear infinite;
+}
+.stopwatch::after{
+    content: "";
+    position: absolute;
+    width: 340px;
+    inset: 5px;
+    background-color: #1b1b1b;
+    border-radius: 50%;
+}
+@keyframes animate{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
 
+.together{
+    z-index: 10;
+}
 #time {
-    
     font-weight: bold;
     font-size: xx-large;
     width: 350px;
     text-align: center;
+    color: #FF10F0;
+    opacity: 0.5;
 }
 .buttons{
-    text-align: center;
-    padding-top: 10px;
-    
+    text-align: center;  
 }
 .bttn{
-    border: 3px black solid;
+    border: 3px solid;
     border-radius: 10%;
     font-size: large;
+    background-color: #1b1b1b;
+    color: rgba(255, 16, 240, 0.15);
     
+}
+.bttn:hover{
+    color: rgba(255, 16, 240, 1);
 }

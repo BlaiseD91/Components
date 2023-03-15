@@ -12,23 +12,15 @@ loadTime();
 resetButton.addEventListener('click', () => {
     watchStop();
     [sec, min, hour] = [0,0,0];
-    counting = false;
     loadTime();
     loadButtons();
 
 });
 
 startPauseButton.addEventListener('click', () => {
-    if(!counting){
-        counting = true;
-        loadButtons();
-        watchStart();
-    }
-    else{
-        counting = false;
-        loadButtons();
-        watchStop();
-    }
+    if(!counting) watchStart();
+    else watchStop();
+    loadButtons();
 });
 
 function stopwatch(){
@@ -40,12 +32,13 @@ function stopwatch(){
             min = 0;
             hour++;
         }
-        
     }
     loadTime();
 }
 
 function watchStop(){
+    counting = false;
+    timeBar.style.opacity = 0.5;
     clearInterval(timer);
 }
 
@@ -53,7 +46,8 @@ function watchStart(){
     if(timer != null){
         clearInterval(timer);
     }
-
+    counting = true;
+    timeBar.style.opacity = 1;
     timer = setInterval(stopwatch,1000);
 }
 
