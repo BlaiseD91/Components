@@ -1,75 +1,79 @@
-const time = document.querySelector('#time');
-const startBttn = document.querySelector('#start');
-const pauseBttn = document.querySelector('#pause');
-const resetBttn = document.querySelector('#reset');
+const startPauseButton = document.querySelector('#startPauseButton');
+const resetButton = document.querySelector('#resetButton');
+const timeBar = document.querySelector('#time');
 
-var hour = 0;
-var min = 0;
-var sec = 0;
-var count = false;
+var counting = false;
+var [sec, min, hour] = [0,0,0];
+var timer = null;
 
+loadButtons();
+loadTime();
 
-reset();
-function counting(){
-        while(count){
-            setTimeout(()=>{
-                if(sec < 60){
-                    sec++;
-                }
-                else{
-                    sec = 0;
-                    if(min<60){
-                        min++;
-                    }
-                    else{
-                        min = 0;
-                        hour++;
-                    }
-                }
-                display();
-            }, 1000);
+resetButton.addEventListener('click', () => {
+    watchStop();
+    [sec, min, hour] = [0,0,0];
+    counting = false;
+    loadTime();
+    loadButtons();
+
+});
+
+startPauseButton.addEventListener('click', () => {
+    if(!counting){
+        counting = true;
+        loadButtons();
+        watchStart();
+    }
+    else{
+        counting = false;
+        loadButtons();
+        watchStop();
+    }
+});
+
+function stopwatch(){
+    sec++;
+    if(sec == 60){
+        sec = 0;
+        min++
+        if(min == 60){
+            min = 0;
+            hour++;
         }
+        
+    }
+    loadTime();
 }
 
-function display(){
-    time.textContent = String(hour).padStart(2, '0') + ' : ' + String(min).padStart(2, '0') + ' : ' + String(sec).padStart(2, '0');
+function watchStop(){
+    clearInterval(timer);
 }
 
-function reset(){
-    hour = 0;
-    min = 0;
-    sec = 0;
-    display();
+function watchStart(){
+    if(timer != null){
+        clearInterval(timer);
+    }
+
+    timer = setInterval(stopwatch,1000);
 }
 
-resetBttn.addEventListener('click', ()=>{
-    count = false;
-    reset();
-    console.log('Reset');
-});
+function loadTime(){
+    let strHour;
+    let strMin;
+    let strSec;
+    if(sec < 10) strSec = String(sec).padStart(2, 0);
+    else strSec = sec.toString();
+    if(min < 10) strMin = String(min).padStart(2, 0);
+    else strMin = min.toString();
+    if(hour < 10) strHour = String(hour).padStart(2, 0);
+    else strHour = hour.toString();
+    timeBar.textContent = strHour + " : " + strMin + " : " + strSec; 
+}
 
-startBttn.addEventListener('click', ()=>{
-    if(!count){
-        console.log('Start');
-        count = true;
-        counting();
-    }
-    else{
-        console.log('Re-Start from 0')
-        count = false;
-        reset();
-        count = true;
-    }
-});
-
-pauseBttn.addEventListener('click', ()=>{
-    if(count){
-        count = false;
-        console.log('Pause');
-    }
-    else{
-        count = true;
-        console.log('Re-Start')
-    }
-});
-
+function loadButtons(){
+    resetButton.textContent = "RESET";
+        //nincs számlálás
+    if(!counting) startPauseButton.textContent = "START";
+        //számlálás tart
+    else startPauseButton.textContent = "PAUSE";
+}
